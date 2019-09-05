@@ -18,9 +18,9 @@ public struct EZLoadingActivity {
         public static var ActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         public static var TextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
         public static var FontName = "HelveticaNeue-Light"
-        // Other possible stuff: ✓ ✓ ✔︎ ✕ ✖︎ ✘
-        public static var SuccessIcon = "✔︎"
-        public static var FailIcon = "✘"
+        // Other possible stuff: â â âï¸ â âï¸ â
+        public static var SuccessIcon = "âï¸"
+        public static var FailIcon = "â"
         public static var SuccessText = "Success"
         public static var FailText = "Failure"
         public static var SuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
@@ -151,7 +151,7 @@ public struct EZLoadingActivity {
             
             let yPosition = frame.height/2 - 20
             
-            activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+            activityView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
             activityView.frame = CGRect(x: 10, y: yPosition, width: 40, height: 40)
             activityView.color = Settings.ActivityColor
             activityView.startAnimating()
@@ -285,17 +285,17 @@ private extension UIView {
     /// Extension: insert view.fadeTransition right before changing content
     func fadeTransition(_ duration: CFTimeInterval) {
         let animation: CATransition = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.type = kCATransitionFade
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.type = CATransitionType.fade
         animation.duration = duration
-        self.layer.add(animation, forKey: kCATransitionFade)
+        self.layer.add(animation, forKey: CATransitionType.fade.rawValue)
     }
 }
 
 private extension NSObject {
     func callSelectorAsync(_ selector: Selector, delay: TimeInterval) {
         let timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: selector, userInfo: nil, repeats: false)
-        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
     }
 }
 
@@ -307,7 +307,7 @@ private extension UIScreen {
     }
     class var ScreenWidth: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if UIInterfaceOrientation.portrait.isPortrait {
                 return UIScreen.main.bounds.size.width
             } else {
                 return UIScreen.main.bounds.size.height
@@ -316,7 +316,7 @@ private extension UIScreen {
     }
     class var ScreenHeight: CGFloat {
         get {
-            if UIInterfaceOrientationIsPortrait(Orientation) {
+            if UIInterfaceOrientation.portrait.isPortrait {
                 return UIScreen.main.bounds.size.height
             } else {
                 return UIScreen.main.bounds.size.width
